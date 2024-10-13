@@ -1,3 +1,32 @@
+.menu-item00001 a,.dropdown1 a {
+  text-decoration: none;
+  list-style-type: none;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: white;
+}
+.menu-item00001 {
+  position: relative;
+}
+
+.dropdown1 {
+  display: none;
+  position: absolute;
+  list-style-type: none;
+  left: -1%; 
+  background-color: white;
+  padding-left:10%;
+  padding-right: 39%;
+}
+
+.dropdown1 a {
+  color: black;
+  display: block;
+  text-align: left; 
+}
+
+.menu-item00001:hover .dropdown1 {
+  display: block;
+}
 #div9 {
   display: flex;
   width: 100%;
