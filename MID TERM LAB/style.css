@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Century+Gothic:wght@400&family=Segoe+UI:wght@400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    width: 70%;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* To clear floats */
+}
+
+.left-column {
+    width: 30%;
+    float: left;
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: left;
+    border-right: 1px solid #e0e0e0;
+    padding-left: 3%;
+    padding-right: 4%;
+    position: relative;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.right-column {
+    width: 70%;
+    float: right;
+    padding: 20px;
+    padding-left: 5%;
+    padding-top: 10%;
+    padding-right: 5%;
+}
+
+.profile-pic img {
+    width: 250px;
+    height: 250px;
+    border: 5px solid skyblue;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    position: relative;
+}
+
+.hover-info {
+    display: none;
+    position: absolute; /* Change this to absolute */
+    top: -60px; /* Position it below the image */
+    left: 940px; /* Align it with the left edge of the profile pic */
+    background-color: burlywood;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 230px; /* Width of the info box */
+    max-width: calc(100% - 10px); /* Ensure it doesn't overflow on smaller screens */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+h1, h2, h3 {
+    font-family: 'Century Gothic', sans-serif;
+    color: #1e90ff;
+}
+
+h1 {
+    font-size: 80px;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+h3 {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+p, ul {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+.left-column h2, .right-column h2 {
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+.contact ul, .hobbies ul, .languages ul {
+    margin-bottom: 10px;
+}
+
+/* Clear floats after container */
+.container::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.right-column h2 {
+    margin-top: 30px; /* Add margin above section headings */
+}
+
+.education, .work-experience, .skills {
+    margin-bottom: 30px; /* Increase space between sections */
+}
+.profile-pic {
+    position: relative; /* Ensure hover-info is positioned relative to this */
+}
