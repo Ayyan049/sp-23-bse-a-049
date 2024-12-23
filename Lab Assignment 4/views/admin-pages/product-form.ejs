@@ -1,0 +1,89 @@
+
+<h3>Existing Products</h3>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <!-- Back Button -->
+        <% if (page > 1) { %>
+            <li class="page-item">
+                <a class="page-link" href="/admin-pages/admin/product/<%= page - 1 %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span> Back
+                </a>
+            </li>
+        <% } else { %>
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo; Back</span>
+            </li>
+        <% } %>
+
+        <!-- Page Numbers -->
+        <% for (let index = 1; index <= totalPages; index++) { %>
+            <li class="page-item <%= page === index ? 'active' : '' %>">
+                <a class="page-link" href="/admin-pages/admin/product/<%= index %>"><%= index %></a>
+            </li>
+        <% } %>
+
+        <!-- Next Button -->
+        <% if (page < totalPages) { %>
+            <li class="page-item">
+                <a class="page-link" href="/admin-pages/admin/product/<%= page + 1 %>" aria-label="Next">
+                    Next <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <% } else { %>
+            <li class="page-item disabled">
+                <span class="page-link">Next &raquo;</span>
+            </li>
+        <% } %>
+    </ul>
+</nav>
+
+<a href="/admin-pages/admin/product/create" class="btn btn-success mb-3">Create New Product</a>
+<form method="GET" action="/admin-pages/admin/product">
+  <div class="input-group mb-3">
+      <input type="text" class="form-control" name="query" placeholder="Search Products" value="<%= query || '' %>">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+  </div>
+</form>
+<form method="GET" action="/admin-pages/admin/product/<%= page %>">
+  <div class="form-group">
+    <label for="sort">Sort By</label>
+    <select name="sort" id="sort" class="form-control">
+      <option value="title_asc" <%= sort === 'title_asc' ? 'selected' : '' %>>Title (A-Z)</option>
+      <option value="title_desc" <%= sort === 'title_desc' ? 'selected' : '' %>>Title (Z-A)</option>
+      <option value="price_asc" <%= sort === 'price_asc' ? 'selected' : '' %>>Price (Low to High)</option>
+      <option value="price_desc" <%= sort === 'price_desc' ? 'selected' : '' %>>Price (High to Low)</option>
+      <option value="category_asc" <%= sort === 'category_asc' ? 'selected' : '' %>>Category (A-Z)</option>
+      <option value="category_desc" <%= sort === 'category_desc' ? 'selected' : '' %>>Category (Z-A)</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Search & Sort</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% products.forEach(product => { %>
+            <tr>
+              <td>
+                <img class="img-thumbnail" src="/<%= product.image %>" alt="<%= product.image %>" style="width: 100px; height: auto;">
+              </td>
+               <td><%= product.title %></td>
+               <td><%= product.price %></td>
+               <td>
+                    <a href="/admin-pages/admin/product/edit/<%= product._id %>" class="btn btn-warning">Edit</a>
+                    <form action="/admin-pages/admin/product/delete/<%= product._id %>" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+               </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

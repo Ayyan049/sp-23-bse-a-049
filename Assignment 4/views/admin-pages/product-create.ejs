@@ -1,0 +1,41 @@
+<h3>Create a New Product</h3>
+<form action="/admin-pages/admin/product-form" method="POST" enctype="multipart/form-data"> <!-- Add enctype -->
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="category" class="form-label">Category</label>
+            <select name="category" class="form-select form-select-sm" required>
+                <% categories.forEach(category => { %>
+                    <option value="<%= category._id %>"><%= category.name %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" class="form-control form-control-sm" required>
+        </div>
+        <div class="col-md-6">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control form-control-sm" rows="2" required></textarea>
+        </div>
+        <div class="col-md-6">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" name="price" class="form-control form-control-sm" required>
+        </div>
+        <div class="col-md-6">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" name="quantity" class="form-control form-control-sm" required>
+        </div>
+        <div class="col-md-6">
+            <label for="isFeatured" class="form-label">Is Featured</label>
+            <select name="isFeatured" class="form-select form-select-sm">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" name="image" class="form-control form-control-sm" required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Create Product</button>
+</form>

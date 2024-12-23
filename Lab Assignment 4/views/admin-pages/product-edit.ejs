@@ -1,0 +1,40 @@
+<h3>Edit Product</h3>
+<form action="/admin-pages/admin/product/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="category" class="form-select" required>
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>" <%= category._id.equals(product.category._id) ? 'selected' : '' %>><%= category.name %></option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" value="<%= product.title %>" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" class="form-control" required><%= product.description %></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" name="price" class="form-control" value="<%= product.price %>" required>
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" name="quantity" class="form-control" value="<%= product.quantity %>" required>
+    </div>
+    <div class="mb-3">
+        <label for="isFeatured" class="form-label">Is Featured</label>
+        <select name="isFeatured" class="form-select">
+            <option value="false" <%= product.isFeatured ? '' : 'selected' %>>No</option>
+            <option value="true" <%= product.isFeatured ? 'selected' : '' %>>Yes</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" name="image" class="form-control"> <!-- File input for image -->
+        <small class="form-text text-muted">Leave blank to keep the current image.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Product</button>
+</form>

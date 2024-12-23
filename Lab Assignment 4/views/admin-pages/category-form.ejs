@@ -1,0 +1,83 @@
+<h3>Existing Categories</h3>
+
+<!-- Search Form -->
+<form method="GET" action="/admin-pages/admin/category/1">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" name="query" value="<%= query %>" placeholder="Search categories...">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+</form>
+
+<!-- Sort Dropdown -->
+<div class="mb-3">
+  <form method="GET" action="/admin-pages/admin/category/1">
+    <select name="sort" class="form-select" onchange="this.form.submit()">
+      <option value="name_asc" <%= sort === 'name_asc' ? 'selected' : '' %>>Name (A-Z)</option>
+      <option value="name_desc" <%= sort === 'name_desc' ? 'selected' : '' %>>Name (Z-A)</option>
+    </select>
+  </form>
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <!-- Back Button -->
+    <% if (page > 1) { %>
+      <li class="page-item">
+        <a class="page-link" href="/admin-pages/admin/category/<%= page - 1 %>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span> Back
+        </a>
+      </li>
+    <% } else { %>
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&laquo; Back</span>
+      </li>
+    <% } %>
+
+    <!-- Page Numbers -->
+    <% for (let index = 1; index <= totalPages; index++) { %>
+      <li class="page-item <%= page === index ? 'active' : '' %>">
+        <a class="page-link" href="/admin-pages/admin/category/<%= index %>"><%= index %></a>
+      </li>
+    <% } %>
+
+    <!-- Next Button -->
+    <% if (page < totalPages) { %>
+      <li class="page-item">
+        <a class="page-link" href="/admin-pages/admin/category/<%= page + 1 %>" aria-label="Next">
+          Next <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    <% } else { %>
+      <li class="page-item disabled">
+        <span class="page-link">Next &raquo;</span>
+      </li>
+    <% } %>
+  </ul>
+</nav>
+
+<!-- Category List -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% categories.forEach(category => { %>
+      <tr>
+        <td><%= category.name %></td>
+        <td>
+          <a href="/admin-pages/admin/category/edit/<%= category._id %>" class="btn btn-primary">Edit</a>
+          <form action="/admin-pages/admin/category/delete/<%= category._id %>" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<!-- Link to Create New Category -->
+<a href="/admin-pages/admin/category/create" class="btn btn-success mb-3">Create New Category</a>
