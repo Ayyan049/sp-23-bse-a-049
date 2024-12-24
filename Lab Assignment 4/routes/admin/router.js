@@ -58,6 +58,7 @@ router.get("/admin-pages/admin/product/:page?", async (req, res) => {
     let pageSize = 2;
     let query = req.query.query || "";
     let sort = req.query.sort || "title_asc";
+    let categoryFilter = req.query.category || ""; // Get the selected category from the query
 
     let sortQuery;
     switch (sort) {
@@ -83,28 +84,30 @@ router.get("/admin-pages/admin/product/:page?", async (req, res) => {
         sortQuery = { title: 1 };
     }
 
-    let products;
+    let filterQuery = {};
     if (query) {
-      products = await Product.find({
+      filterQuery = {
         $or: [
           { title: { $regex: query, $options: "i" } },
           { description: { $regex: query, $options: "i" } },
         ],
-      })
-        .populate("category")
-        .limit(pageSize)
-        .skip((page - 1) * pageSize)
-        .sort(sortQuery);
-    } else {
-      products = await Product.find()
-        .populate("category")
-        .limit(pageSize)
-        .skip((page - 1) * pageSize)
-        .sort(sortQuery);
+      };
     }
 
-    let totalRecords = await Product.countDocuments();
+    if (categoryFilter) {
+      filterQuery.category = categoryFilter; // Add category filter
+    }
+
+    let products = await Product.find(filterQuery)
+      .populate("category")
+      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .sort(sortQuery);
+
+    let totalRecords = await Product.countDocuments(filterQuery); // Count documents based on filter
     let totalPages = Math.ceil(totalRecords / pageSize);
+
+    const categories = await Category.find(); // Fetch categories for the filter
 
     res.render("admin-pages/product-form", {
       layout: "admin-layout",
@@ -114,13 +117,14 @@ router.get("/admin-pages/admin/product/:page?", async (req, res) => {
       totalPages,
       query,
       sort,
+      categories, // Pass categories to the view
+      categoryFilter, // Pass selected category filter to the view
     });
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).send("Server Error");
   }
 });
-
 router.post(
   "/admin-pages/admin/product-form",
   upload.single("image"),
